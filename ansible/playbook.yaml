@@ -1,0 +1,21 @@
+--- 
+- name: Установка стандартных пакетов
+  hosts: all
+  roles:
+    - role: default_packages
+  tags:
+    - install_packages
+
+- name: Установка и настройка проксирующего Nginx
+  hosts: vm_2 # Будет работать на узлах в группе nginx
+  roles:
+    - role: nginx_proxy
+  tags:
+    - nginx_proxy
+
+- name: Установка и настройка отдающего Nginx
+  hosts: vm_3 # Будет работать на узлах в группе nginx
+  roles:
+    - role: nginx_return
+  tags:
+    - nginx_return

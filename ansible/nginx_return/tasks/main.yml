@@ -1,0 +1,15 @@
+---
+# tasks file for nginx_custom
+
+- name: Установка Nginx 
+  apt:
+    name: "nginx"
+    state: present
+
+- name: Подмена веб-страницы
+  ansible.builtin.template:
+    src: index.j2
+    dest: /var/www/html/index.nginx-debian.html
+  when: hostvars[inventory_hostname]['your_variable'] == 'nginx_3' # Выполнится только тогда, когда в имени есть vm_3
+  notify: "Nginx Reloader"
+
