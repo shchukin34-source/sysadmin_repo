@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint = "https://100.83.224.113:8006"
-  api_token = "root@pam!tf_token=88a631a0-badb-41f1-82bd-ea41f2ad6907"
+  endpoint = "https://*****8006"
+  api_token = "root@pam!tf_token=*****"
   insecure = true
   
   ssh {
