@@ -13,7 +13,7 @@ terraform {
 # Настройка провайдера Proxmox с API токеном
 provider "proxmox" {
   endpoint  = "https://100.83.224.113:8006/"
-  api_token = "terraform-provider@pve!provider=c57f7657-2c6c-4b53-b53a-4bf4c9fcad7d"
+  api_token = "terraform-provider@pve!provider=c57f7657"
   insecure  = true
 
   # SSH для провижинеров
