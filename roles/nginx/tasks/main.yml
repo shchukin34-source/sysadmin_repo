@@ -1,0 +1,23 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Copy nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: '0644'
+  notify: Restart nginx
+
+- name: Deploy index.html from template
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0644'

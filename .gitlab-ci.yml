@@ -1,0 +1,16 @@
+stages:
+  - lint
+
+yamllint:
+  stage: lint
+  image: python:3.12
+  script:
+    - pip install yamllint
+    - yamllint .
+
+ansible-lint:
+  stage: lint
+  image: python:3.12
+  script:
+    - pip install ansible ansible-lint
+    - ansible-lint nginx.yml
