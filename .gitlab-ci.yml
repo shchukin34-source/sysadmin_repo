@@ -6,11 +6,11 @@ yamllint:
   image: python:3.12
   script:
     - pip install yamllint
-    - yamllint .
+    - yamllint training/ansible/nginx-simple/
 
 ansible-lint:
   stage: lint
   image: python:3.12
   script:
     - pip install ansible ansible-lint
-    - ansible-lint nginx.yml
+    - ansible-lint training/ansible/nginx-simple/nginx.yml
