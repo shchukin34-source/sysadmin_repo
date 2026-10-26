@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  postgres-server:
+    image: postgres:15
+    container_name: zabbix-postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: strong_zabbix_password
+      POSTGRES_DB: zabbix
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    networks:
+      - zabbix-net
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-6.4-latest
+    container_name: zabbix-server
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: strong_zabbix_password
+    ports:
+      - "10051:10051"
+    restart: always
+    depends_on:
+      - postgres-server
+    networks:
+      - zabbix-net
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-6.4-latest
+    container_name: zabbix-web
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: strong_zabbix_password
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: Europe/Moscow
+    ports:
+      - "80:8080"
+    restart: always
+    depends_on:
+      - postgres-server
+      - zabbix-server
+    networks:
+      - zabbix-net
+
+networks:
+  zabbix-net:
+    driver: bridge
